@@ -1,1 +1,298 @@
-# Basic
+<!DOCTYPE html>
+<html>
+<head>
+<title>FreshMart Grocery</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f4f4f4;
+}
+
+/* LOGIN PAGE */
+
+#loginPage{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#0f172a;
+color:white;
+}
+
+.login-box{
+background:white;
+color:black;
+padding:40px;
+border-radius:10px;
+width:300px;
+text-align:center;
+}
+
+.login-box input{
+width:100%;
+padding:10px;
+margin:10px 0;
+}
+
+button{
+padding:10px 15px;
+background:#22c55e;
+border:none;
+color:white;
+cursor:pointer;
+border-radius:5px;
+}
+
+/* HOME */
+
+#homePage{
+display:none;
+}
+
+nav{
+background:#0f172a;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+}
+
+.search{
+padding:10px;
+width:300px;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:40px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 5px 10px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:100%;
+height:150px;
+object-fit:cover;
+border-radius:8px;
+}
+
+/* ORDER PAGE */
+
+#orderPage{
+display:none;
+padding:40px;
+}
+
+form{
+max-width:400px;
+margin:auto;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+input{
+padding:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage">
+
+<div class="login-box">
+
+<h2>Login</h2>
+
+<input type="text" placeholder="Username" id="user">
+
+<input type="password" placeholder="Password" id="pass">
+
+<button onclick="login()">Login</button>
+
+</div>
+
+</div>
+
+
+<!-- HOME PAGE -->
+
+<div id="homePage">
+
+<nav>
+
+<h2>FreshMart</h2>
+
+<input class="search" type="text" placeholder="Search product..." onkeyup="searchProduct(this.value)">
+
+</nav>
+
+<div class="products" id="productList">
+
+<div class="card" data-name="apple">
+<img src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce">
+<h3>Apple</h3>
+<p>₹120/kg</p>
+<button onclick="order('Apple')">Buy</button>
+</div>
+
+<div class="card" data-name="strawberry">
+<img src="https://www.istockphoto.com/photos/strawberry">
+<h3>strawberry</h3>
+<p>₹100/kg</p>
+<button onclick="order('strawberry')">Buy</button>
+</div> 
+
+<div class="card" data-name="banana">
+<img src="https://images.unsplash.com/photo-1603833665858-e61d17a86224">
+<h3>Banana</h3>
+<p>₹50/dozen</p>
+<button onclick="order('Banana')">Buy</button>
+</div>
+
+<div class="card" data-name="milk">
+<img src="https://images.unsplash.com/photo-1563636619-e9143da7973b">
+<h3>Milk</h3>
+<p>₹60</p>
+<button onclick="order('Milk')">Buy</button>
+</div>
+
+<div class="card" data-name="tomato">
+<img src="https://images.unsplash.com/photo-1582515073490-dc9e4a5a2b6b">
+<h3>Tomato</h3>
+<p>₹40/kg</p>
+<button onclick="order('Tomato')">Buy</button>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ORDER PAGE -->
+
+<div id="orderPage">
+
+<h2 align="center">Order Form</h2>
+
+<form onsubmit="sendOrder(event)">
+
+<input type="text" id="name" placeholder="Your Name" required>
+
+<input type="text" id="phone" placeholder="Phone Number" required>
+
+<input type="text" id="address" placeholder="Address" required>
+
+<input type="text" id="product" readonly>
+
+<input type="number" id="qty" placeholder="Quantity" required>
+
+<button type="submit">Submit Order</button>
+
+</form>
+
+</div>
+
+
+<script>
+
+/* LOGIN */
+
+function login(){
+
+let u=document.getElementById("user").value
+let p=document.getElementById("pass").value
+
+if(u && p){
+
+document.getElementById("loginPage").style.display="none"
+document.getElementById("homePage").style.display="block"
+
+}else{
+
+alert("Enter login details")
+
+}
+
+}
+
+/* SEARCH */
+
+function searchProduct(value){
+
+let cards=document.querySelectorAll(".card")
+
+cards.forEach(card=>{
+
+let name=card.dataset.name
+
+if(name.includes(value.toLowerCase())){
+
+card.style.display="block"
+
+}else{
+
+card.style.display="none"
+
+}
+
+})
+
+}
+
+/* ORDER PAGE */
+
+function order(product){
+
+document.getElementById("homePage").style.display="none"
+document.getElementById("orderPage").style.display="block"
+
+document.getElementById("product").value=product
+
+}
+
+/* SEND ORDER WHATSAPP */
+
+function sendOrder(e){
+
+e.preventDefault()
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let address=document.getElementById("address").value
+let product=document.getElementById("product").value
+let qty=document.getElementById("qty").value
+
+let message=
+"New Order%0A"+
+"Name: "+name+"%0A"+
+"Phone: "+phone+"%0A"+
+"Address: "+address+"%0A"+
+"Product: "+product+"%0A"+
+"Quantity: "+qty
+let whatsapp="https://wa.me/9342380860?text="+message
+
+window.open(whatsapp)
+
+}
+
+</script>
+
+</body>
+</html>
