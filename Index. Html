@@ -174,7 +174,7 @@ padding:10px;
 </div>
 
 <div class="card" data-name="tomato">
-<img src="https://images.unsplash.com/photo-1582515073490-dc9e4a5a2b6b">
+<img src="tomatoimg.jpg">
 <h3>Tomato</h3>
 <p>₹40/kg</p>
 <button onclick="order('Tomato')">Buy</button>
